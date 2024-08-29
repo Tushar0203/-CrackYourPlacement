@@ -1,0 +1,42 @@
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        k=k%nums.size();
+        reverse(nums.begin(),nums.begin()+(nums.size()-k));
+
+        reverse(nums.begin()+(nums.size()-k),nums.end());
+    
+        reverse(nums.begin(),nums.end());
+      
+    }
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        if(n==0)return;
+       int i=0,j=0;
+       int k=m;
+       while(i<m && j<n){
+        if(nums1[i]<=nums2[j]){
+            nums1[k]=nums1[i];
+            i++;
+        }else{
+            nums1[k]=nums2[j];
+            j++;
+        }
+            k++;
+            if(k==m+n)k=0;
+       }
+       while(i<m){
+            nums1[k]=nums1[i];
+            i++;
+            k++;
+            if(k==m+n)k=0;
+       }
+       while(j<n){
+            nums1[k]=nums2[j];
+            j++;
+            k++;
+            if(k==m+n)k=0;
+       }
+       rotate(nums1,n);
+    }
+    
+};
