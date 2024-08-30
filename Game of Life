@@ -1,0 +1,39 @@
+class Solution {
+public:
+    void gameOfLife(vector<vector<int>>& board) {
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board[0].size(); j++) {
+
+                int count = 0;
+                for (int t1 = i - 1; t1 < i + 2; t1++) {
+                    for (int t2 = j - 1; t2 < j + 2; t2++) {
+                        if (t1 < board.size() && t1 >= 0 &&
+                            t2 < board[0].size() && t2 >= 0 &&
+                            (t1 != i || t2 != j)) {
+
+                            count += board[t1][t2] % 2;
+                        }
+                    }
+                }
+
+                if (board[i][j] == 0) {
+                    if (count == 3)
+                        board[i][j] = 2;
+                } else if (board[i][j] == 1) {
+                    if (count < 2 || count > 3) {
+                        board[i][j] = 3;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board[0].size(); j++) {
+                if (board[i][j] == 3) {
+                    board[i][j] = 0;
+                } else if (board[i][j] == 2) {
+                    board[i][j] = 1;
+                }
+            }
+        }
+    }
+};
