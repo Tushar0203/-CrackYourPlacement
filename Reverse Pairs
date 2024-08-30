@@ -1,0 +1,70 @@
+class Solution {
+public:
+    int merge(int i,int mid,int e,vector<int>& nums){
+        int count=0;
+        vector<int> p1,p2;
+        for(int k=i;k<=mid;k++){
+            p1.push_back(nums[k]);
+        }
+        for(int k=mid+1;k<=e;k++){
+            p2.push_back(nums[k]);
+        }
+        int t1=0,t2=0;
+        while(t1<p1.size() && t2<p2.size()){
+            if(p1[t1]>2*(long)p2[t2]){
+                count+=p1.size()-t1;
+                t2++;
+            }else{
+                t1++;
+            }
+        }
+        int k=i;
+        t1=0,t2=0;
+        while(t1<p1.size() && t2<p2.size()){
+            if(p1[t1]<=p2[t2]){
+                nums[k]=p1[t1];
+                t1++;
+            }else{
+                nums[k]=p2[t2];
+                
+                t2++;
+            }
+            k++;
+        }
+        // if(t1<p1.size())
+        // count+=p2.size()*(p1.size()-t1);
+        while(t1<p1.size()){
+            nums[k]=p1[t1];
+                
+
+                    
+                    t1++;
+                 k++;
+        }
+        while(t2<p2.size()){
+            nums[k]=p2[t2];
+                t2++;
+                
+                   
+                 k++;
+        }
+       
+        return count;
+    }
+    int countSum(int i,int e,vector<int>& nums){
+       
+        if(i<e){
+            int mid=(i+e)/2;
+            int count=0;
+            count+=countSum(i,mid,nums);
+            count+=countSum(mid+1,e,nums);
+            count+=merge(i,mid,e,nums);
+            return count;
+        }
+        return 0;
+    }
+    int reversePairs(vector<int>& nums) {
+        int i=0,e=nums.size()-1;
+        return countSum(i,e,nums);
+    }
+};
