@@ -1,0 +1,39 @@
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        if(s.length()<t.length())return "";
+        unordered_map<char,int>fs,ft;
+        string temp="";
+        int anss=-1,anse=-1;
+        for(int i=0;i<t.length();i++){
+            ft[t[i]]++;
+        }
+        int i=0,count=0;
+        int st=0,ans=INT_MAX;
+        while(i<s.length()){
+            fs[s[i]]++;
+            if(ft.find(s[i])!=ft.end() && ft[s[i]]==fs[s[i]])count++;
+            while(count==ft.size()){
+                if(ans>i-st+1){
+                    ans=i-st+1;
+                    anss=st;
+                    anse=i;
+                }
+                
+                fs[s[st]]--;
+                if(ft.find(s[st])!=ft.end() && ft[s[st]]>fs[s[st]]){
+                    count--;
+                }
+                st++;
+                
+            }
+            i++;
+        }
+        
+        if(anse==-1)return "";
+        for(int i=anss;i<=anse;i++){
+            temp+=s[i];
+        }
+        return temp;
+    }
+};
