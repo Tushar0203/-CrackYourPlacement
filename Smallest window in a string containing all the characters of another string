@@ -1,0 +1,45 @@
+class Solution
+{
+    public:
+    //Function to find the smallest window in the string s consisting
+    //of all the characters of string p.
+    string smallestWindow (string s, string t)
+    {
+        if(s.length()<t.length())return "-1";
+        vector<int> fs(256,0),ft(256,0);
+        string temp="";
+        int anss=-1,anse=-1;
+        int ecount=0;
+        for(int i=0;i<t.length();i++){
+            if(ft[t[i]]==0)ecount++;
+            ft[t[i]]++;
+        }
+        int i=0,count=0;
+        int st=0,ans=INT_MAX;
+        while(i<s.length()){
+            fs[s[i]]++;
+            if(ft[s[i]]!=0 && ft[s[i]]==fs[s[i]])count++;
+            while(count==ecount){
+                if(ans>i-st+1){
+                    ans=i-st+1;
+                    anss=st;
+                    anse=i;
+                }
+                
+                fs[s[st]]--;
+                if(ft[s[i]]!=0 && ft[s[st]]>fs[s[st]]){
+                    count--;
+                }
+                st++;
+                
+            }
+            i++;
+        }
+        
+        if(anse==-1)return "-1";
+        for(int i=anss;i<=anse;i++){
+            temp+=s[i];
+        }
+        return temp;
+    }
+};
