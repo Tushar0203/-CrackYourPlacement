@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& str) {
+        vector<pair<string,int>> s;
+        vector<vector<string>> ans;
+        if(str.size()==0)return ans;
+        for(int i=0;i<str.size();i++){
+            s.push_back(make_pair(str[i],i));
+        }
+        for(int i=0;i<s.size();i++){
+            sort(s[i].first.begin(),s[i].first.end());
+        }
+        sort(s.begin(),s.end());
+        vector<string> temp,empty;
+        int i=0;
+        for(int i=0;i<s.size();i++){
+            cout<<s[i].second<<" "<<s[i].first<<endl;
+        }
+        while(i<s.size()-1){
+            temp.push_back(str[s[i].second]);
+            if(s[i].first!=s[i+1].first){
+                
+                ans.push_back(temp);
+                temp.clear();
+                }
+            
+            i++;
+        }
+        temp.push_back(str[s[i].second]);
+        ans.push_back(temp);
+        return ans;
+    }
+};
